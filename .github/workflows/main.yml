@@ -7,6 +7,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: pull latest and remove old file from repo
+      env:
+        GITHUB_TOKEN: ${{ secrets.RESOURCE_ZIPPER }}
       run: |
         git config --global user.name "AidanSkye"
         git config --global user.email "mccartyaidan2011@gmail.com"
@@ -15,10 +17,14 @@ jobs:
         rm -f release.zip
     - name: Archive Release
       uses: thedoctor0/zip-release@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.RESOURCE_ZIPPER }}
       with:
         filename: 'release.zip'
         exclusions: '*.git* /*node_modules/* .editorconfig'
     - name: push changes to remote
+      env:
+        GITHUB_TOKEN: ${{ secrets.RESOURCE_ZIPPER }}
       run: |
         git add -A
         git commit -m "new pack"
